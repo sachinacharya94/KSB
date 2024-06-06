@@ -1,5 +1,9 @@
+
+import Footer from "./Components/Footer";
+
 import { useEffect, useState } from "react";
 import Header from "./Components/Header";
+
 
 export default function Home() {
   let [categories, setCategories] = useState([])
@@ -18,13 +22,18 @@ export default function Home() {
 
     <div>
 
-
       <Header />
 
-      <h3>
-        Hello
-      </h3>
+    <h3>
+      Hello
+    </h3>
+    <Footer/>
+   
 
-    </div>
+</div>
+
+      
+
+    
   );
 }
