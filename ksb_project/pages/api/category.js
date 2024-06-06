@@ -2,7 +2,7 @@ import "../../Database/connection"
 const Category = require("../../Models/categoryModel")
 
 export default async function handler(req, res) {
-    if (req.method == "post") {
+    if (req.method == "POST") {
         let categoryToAdd = await Category.create({
             category_name: req.body.category_name
         })
