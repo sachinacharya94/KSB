@@ -1,8 +1,6 @@
 
-import Footer from "./Components/Footer";
 
 import { useEffect, useState } from "react";
-import Header from "./Components/Header";
 
 
 export default function Home() {
@@ -22,7 +20,7 @@ export default function Home() {
 
     <div>
 
-      <Header />
+
 
 
       <h3>
@@ -30,17 +28,17 @@ export default function Home() {
         Hii
 
       </h3>
-    <h3>  
-      Hello
-    </h3>
-    <Footer/>
-   
-
-</div>
-
-      
+      <h3>
+        Hello
+      </h3>
 
 
-    
+
+    </div>
+
+
+
+
+
   );
 }
