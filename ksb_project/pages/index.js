@@ -30,7 +30,7 @@ export default function Home() {
         Hii
 
       </h3>
-    <h3>
+    <h3>  
       Hello
     </h3>
     <Footer/>
