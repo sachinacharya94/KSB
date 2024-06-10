@@ -3,8 +3,11 @@
 import { useEffect, useState } from "react";
 import { getAllCategories } from "./api/categoryAPI";
 import { getAllProduct, getProductByCategory } from "./api/productAPI";
-import Carousel from "./Components/Carousel";
+import Carousels from "./Components/Carousel";
 import Product from "./Components/Product";
+import Carousel from "react-multi-carousel";
+import "react-multi-carousel/lib/styles.css";
+import Link from "next/link";
 
 
 export default function Home() {
@@ -29,10 +32,32 @@ export default function Home() {
     // console.log(id, "id")
     getProductByCategory(id)
       .then((data) => setProductsBasedOnCategory(data))
+
+
   }
+
+  const responsive = {
+    superLargeDesktop: {
+      // the naming can be any, depends on you.
+      breakpoint: { max: 4000, min: 3000 },
+      items: 5
+    },
+    desktop: {
+      breakpoint: { max: 3000, min: 1024 },
+      items: 3
+    },
+    tablet: {
+      breakpoint: { max: 1024, min: 464 },
+      items: 2
+    },
+    mobile: {
+      breakpoint: { max: 464, min: 0 },
+      items: 1
+    }
+  };
   return (
     <div  >
-      <Carousel />
+      <Carousels />
       <div className="w-3/4 m-auto mt-20 text-center relative">
         <h1 className="text-4xl font-semibold" >
           OUR PRODUCT
@@ -75,7 +100,7 @@ export default function Home() {
             <p>Kirloskar Brothers Limited is a world-class pump manufacturing company with enterprise in engineering and manufacture of systems for fluid management. Established in 1888 and incorporated in 1920, KBL is a flagship company of the $2.1 billion Kirloskar Group. The market leader in fluid management, KBL provides complete fluid management solutions for large infrastructure projects in the areas of water supply, power plants, irrigation, oil & gas and marine & defence.
 
             </p>
-            <button className="rounded-md bg-orange-500 p-2 px-3 mt-3 ">Read More</button>
+            <button className="rounded-md bg-orange-500 p-2 px-3 mt-3 "><Link href='/about'>Read More</Link></button>
           </div>
           <div className="w-1/2 ">
             <iframe width="560" height="320" src="https://www.youtube.com/embed/U8iWNaDuUek?si=zIJRS0rQ-tROmj3T" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
@@ -93,13 +118,20 @@ export default function Home() {
             </p>
           </div>
           <div>
-            Slider
+            <Carousel responsive={responsive}>
+              <div>Item 1</div>
+              <div>Item 2</div>
+              <div>Item 3</div>
+              <div>Item 4</div>
+            </Carousel>;
           </div>
 
         </div>
-        <div>
+      </div>
+      <div className="h-36 w-full bg-ksb flex flex-row justify-center items-center gap-32">
+        <p className="text-white text-4xl pl-0">Want to be a part of our family?</p>
+        <button className=" text-3xl block py-1 px-5 text-gray-100 bg-white rounded-lg md:bg-transparent md:text-white md:px-5 md:py-1 dark:text-white md:dark:text-blue-500 hover:md:bg-white hover:md:text-ksb hover:duration-200 md:border-solid md:border-[1px] md:border-white ">Contact us now</button>
 
-        </div>
       </div>
     </div>
   );
