@@ -1,0 +1,58 @@
+import '../../Database/connection'
+const User = require('../../Models/userModel')
+const bcrypt = require('bcrypt')
+const saltRounds = 10
+
+
+export default async function handler(req,res){
+try {
+  if(req.method=="POST"){
+
+    let {username, email, password} = req.body
+
+    if(username && email && password) {
+      let userExists = await User.findOne({username})
+    if(userExists){
+      return res.status(400).json({error:"Username not available."})
+    }
+    userExists = await User.findOne({email})
+    if(userExists){
+      return res.status(400).json({error:"Email already registered"})
+    }
+    let salt = await bcrypt.genSalt(saltRounds)
+    let hashed_password = await bcrypt.hash(password,salt)
+
+    let newUser = await User.create({
+      username,
+      email,
+      password: hashed_password
+    })
+    if(!newUser){
+      return res.status(400).json({error:"Something went wrong"})
+    }
+    res.send(newUser)
+    }
+    if(email && password){
+      let user = await User.findOne({email})
+      if(!user){
+        return res.status(400).json({error:"Email not registered"})
+      }
+      const validPassword = await bcrypt.compare(password,user.password)
+      if(!validPassword){
+        return res.status(400).json({error:"Invalid Password or Password does not match"})
+      }
+      res.send("Signin successfull",user)
+    }
+    else {
+      return res.status(400).json({ error: "Invalid request parameters." })
+  }
+    
+  }
+  else {
+    res.status(405).json({ error: "Method not allowed" })
+}
+  
+} catch (error) {
+  res.status(500).json({ error: "Internal server error" })
+}
+} 
