@@ -29,7 +29,7 @@ export const addProduct = (product) =>{
             accept: "Application/json",
             "Content-Type": "Application/json",
         },
-        body: product
+        body: JSON.stringify({product})
     })
     .then(res=>res.json())
     .then(err=>console.log(err))
