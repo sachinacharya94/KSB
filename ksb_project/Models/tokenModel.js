@@ -18,4 +18,4 @@ const tokenSchema = new mongoose.Schema({
   }
 })
 
-module.exports = mongoose.models.Token || mongoose.model("Token", userSchema)
+module.exports = mongoose.models.Token || mongoose.model("Token", tokenSchema)
