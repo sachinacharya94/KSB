@@ -24,7 +24,7 @@ export const addCategory = (category_name) => {
 
 export const updateCategory = (id,category_name) =>{
     return fetch(`api/category?id=${id}`,{
-        method:"PUT",
+        method:"PATCH",
         headers:{
           accept : "Application/json",
           "Content-Type":"application/json",
@@ -39,9 +39,6 @@ export const updateCategory = (id,category_name) =>{
 export const getCategoryById = (id) =>{
     return fetch(`api/category?id=${id}`)
     .then(res=>res.json())
-  .then(data=>{
-    return data.category_name
-  })
   .catch(err=>console.log(err))
 }
 
