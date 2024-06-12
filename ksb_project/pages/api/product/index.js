@@ -8,6 +8,7 @@ export default async function handler(req, res) {
                 title: req.body.title,
                 about: req.body.about,
                 application: req.body.application,
+                image: req.file?.path,
                 category: req.body.category,
             });
             if (!productToAdd) {
