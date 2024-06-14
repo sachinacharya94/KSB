@@ -29,27 +29,27 @@ export default async function handler(req, res) {
                 }
                 return res.send(product);
             } else {
-                let products = await Product.find()
+                let products = await Product.find().populate('category', 'category_name')
                 res.send(products);
             }
-            
-        } 
-        else if(req.method == "PATCH"){
-            let productToUpdate = await Product.findByIdAndUpdate(req.query.id,{
+
+        }
+        else if (req.method == "PATCH") {
+            let productToUpdate = await Product.findByIdAndUpdate(req.query.id, {
                 title: req.body.title,
                 about: req.body.about,
                 application: req.body.application,
                 category: req.body.category,
-            },{new:true})
-            if(!productToUpdate){
-                return res.status(400).json({error:"Something went wrong"})
+            }, { new: true })
+            if (!productToUpdate) {
+                return res.status(400).json({ error: "Something went wrong" })
             }
             res.send(productToUpdate)
         }
-        else if(req.method == "DELETE"){
+        else if (req.method == "DELETE") {
             let deleteProduct = await Product.findByIdAndDelete(req.query.id)
-            if(!deleteProduct){
-                return res.status(400).json({error:"Something went wrong."})
+            if (!deleteProduct) {
+                return res.status(400).json({ error: "Something went wrong." })
             }
             res.send({ message: "Product deleted successfully" })
         }
