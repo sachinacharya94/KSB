@@ -1,9 +1,12 @@
-import { getAllCategories } from '@/pages/api/categoryAPI'
+import { deleteCategory, getAllCategories } from '@/pages/api/categoryAPI'
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 import React, { useEffect, useState } from 'react'
+import Swal from 'sweetalert2'
 
 const category_page = () => {
     let [categories, setCategories] = useState([])
+    let router = useRouter()
 
 
     useEffect(() => {
@@ -12,6 +15,39 @@ const category_page = () => {
     }, [])
 
     console.log(categories)
+
+    const handleDelete = id => e => {
+        e.preventDefault()
+        Swal.fire({
+            title: "Confirm ",
+            text: "Are you sure you want to delete this category?",
+            icon: "question",
+            showCancelButton: true,
+            cancelButtonColor: '#dd1111',
+            confirmButtonText: "OK, Delete!",
+            position: "center",
+            // timer:1000,
+        })
+            .then(result => {
+                if (result.isConfirmed) {
+                    deleteCategory(id)
+                        .then(data => {
+                            if (data.error) {
+                                Swal.fire("Error", data.error, 'error')
+                            }
+                            else {
+                                Swal.fire("Success", data.message, 'success')
+                                    .then(data => {
+                                        router.refresh()
+                                    })
+                            }
+                        })
+                }
+                else {
+                    Swal.fire("Cancelled", "Nothing is deleted ", 'info')
+                }
+            })
+    }
     return (
         <div>
             <div>
@@ -47,7 +83,7 @@ const category_page = () => {
                                         </td>
                                         <td className="px-6 py-4">
                                             <Link href={`/admin/category/edit/${category._id}`} className="font-medium text-blue-600 dark:text-blue-500 hover:underline"><button type='warning'>Edit</button></Link>
-                                            <button type='delete' onClick=''>Delete</button>
+                                            <button type='delete' onClick={handleDelete(category._id)}>Delete</button>
                                         </td>
                                     </tr>
                                 })
