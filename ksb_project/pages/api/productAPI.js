@@ -15,50 +15,60 @@ export const getProductByCategory = (id) => {
 }
 
 
-export const getProductById = (id) =>{
+export const getProductById = (id) => {
     return fetch(`/api/product?product=${id}`)
-    .then(res=>res.json())
-    .catch(err=>console.log(err))
+        .then(res => res.json())
+        .catch(err => console.log(err))
 }
 
 
-export const addProduct = (product) =>{
-    return fetch(`/api/product`,{
+// export const addProduct = (product) => {
+//     return fetch(`/api/product`, {
+//         method: "POST",
+//         body: product
+//     })
+//         .then(res => res.json())
+//         .catch(err => console.log(err))
+// }
+
+
+export const addProduct = (product) => {
+    return fetch(`/api/product`, {
         method: "POST",
+        // headers: {
+        //     "Content-Type": "application/json"
+        // },
+        // body: JSON.stringify(product)
+        body: product
+    })
+        .then(res => res.json())
+        .catch(err => console.log(err))
+}
+
+
+export const updateProduct = (id, product) => {
+    return fetch(`/api/product?product=${id}`, {
+        method: "PATCH",
         headers: {
             accept: "Application/json",
-            "Content-Type": "Application/json",
+            "Content-Type": "application/json",
         },
-        body: JSON.stringify({product})
+        body: product
     })
-    .then(res=>res.json())
-    .then(err=>console.log(err))
-}
-
-
-export const updateProduct = (id,product) =>{
-    return fetch(`/api/product?product=${id}`,{
-        method:"PATCH",
-        headers:{
-            accept : "Application/json",
-            "Content-Type":"application/json",
-          },
-        body : product
-    })
-    .then(res=>res.json())
-    .then(err=>console.log(err))
+        .then(res => res.json())
+        .catch(err => console.log(err))
 }
 
 
 
-export const deleteProduct = (id) =>{
-    return fetch(`/api/product?id=${id}`,{
-        method:"DELETE",
-        headers:{
-            accept : "Application/json",
-            "Content-Type":"application/json",
-          },
+export const deleteProduct = (id) => {
+    return fetch(`/api/product?id=${id}`, {
+        method: "DELETE",
+        headers: {
+            // accept: "Application/json",
+            "Content-Type": "application/json",
+        },
     })
-    .then(res=>res.json())
-    .then(err=>console.log(err))
+        .then(res => res.json())
+        .catch(err => console.log(err))
 }
