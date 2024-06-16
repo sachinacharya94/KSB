@@ -1,5 +1,7 @@
 import Link from 'next/link'
 import React, { useState } from 'react'
+import { addMessage } from './api/contactAPI'
+import Swal from 'sweetalert2'
 
 const contactUs = () => {
     let [message, setMessage] = useState({
@@ -18,6 +20,15 @@ const contactUs = () => {
 
     const handleClick = (e) => {
         e.preventDefault()
+        addMessage(message)
+            .then(data => {
+                if (data && data.error) {
+                    Swal.fire("Error", data.error, "error")
+                }
+                else {
+                    Swal.fire("Success", "Message Sent Successfully!", "success")
+                }
+            })
 
     }
     return (
