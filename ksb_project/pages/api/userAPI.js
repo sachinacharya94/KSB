@@ -7,8 +7,10 @@ export const registerUser = (user) => {
     },
     body: JSON.stringify(user)
   })
+
     .then(res => { return res.json() })
     .catch(err => console.log(err))
+
 }
 
 export const login = (user) => {
@@ -20,13 +22,17 @@ export const login = (user) => {
     },
     body: JSON.stringify(user)
   })
+
     .then(res => { return res.json() })
     .catch(err => console.log(err))
+
 }
 
 
 export const getUser = () => {
   return fetch('/api/user')
-    .then(res => res.json())
-    .catch(err => console.log(err))
+
+  .then(res=>res.json())
+  .catch(err=>console.log(err))
+
 }
