@@ -1,39 +1,39 @@
 export const addMessage = (contact) => {
-  return fetch('/api/contact',{
-    method:"POST",
+  return fetch('/api/contact', {
+    method: "POST",
     headers: {
       accept: "Application/json",
       "Content-Type": "Application/json",
-  },
-  body: contact
+    },
+    body: JSON.stringify(contact)
   })
-  .then(res=>res.json())
-  .then(err=>console.log(err))
+    .then(res => res.json())
+    .catch(err => console.log(err))
 }
 
 
-export const getAllMessages = () =>{
+export const getAllMessages = () => {
   return fetch('/api/contact')
-  .then(res=>res.json())
-  .then(err=>console.log(err))
+    .then(res => res.json())
+    .catch(err => console.log(err))
 }
 
-export const deleteMessage = () =>{
-  return fetch(`/api/contact?id=${id}`,{
-    method:"DELETE",
+export const deleteMessage = (id) => {
+  return fetch(`/api/contact?id=${id}`, {
+    method: "DELETE",
     headers: {
       accept: "Application/json",
       "Content-Type": "Application/json",
-  },
+    },
   })
-  .then(res=>res.json())
-  .then(err=>console.log(err))
+    .then(res => res.json())
+    .catch(err => console.log(err))
 }
 
 
-export const getMessageById = (id) =>{
+export const getMessageById = (id) => {
   return fetch(`/api/contact?id=${id}`)
-  .then(res=>res.json())
-  .then(err=>console.log(err))
+    .then(res => res.json())
+    .catch(err => console.log(err))
 }
 
