@@ -6,12 +6,12 @@ const Token = require('../../Models/tokenModel')
 const jwt = require('jsonwebtoken')
 const {expressjwt} = require('express-jwt')
 const crypto = require('crypto')
-
+import cookie from 'cookie'
 
 export default async function handler(req, res) {
-  try {
+  
     if (req.method === "POST") {
-      const { username, email, password, token } = req.body
+      const { username, email, password } = req.body
 
       if (username && email && password) {
         let userExists = await User.findOne({ username })
@@ -50,7 +50,7 @@ export default async function handler(req, res) {
       }
 
 
-       if (email && password) {
+      else if (email && password){
         let user = await User.findOne({ email })
 
         if (!user) {
@@ -67,11 +67,21 @@ export default async function handler(req, res) {
 
         let token = jwt.sign({
           _id,
+          email,
           username
         }, process.env.JWT_SECRET)
 
-        res.cookie('myCookie', token, { expire: 86400 })
-        res.send({ token, user: { _id, username } })
+
+        res.setHeader('Set-Cookie', cookie.serialize('myCookie', token, {
+          httpOnly: true,
+          secure: process.env.NODE_ENV !== 'development',
+          maxAge: 86400,
+          sameSite: 'strict',
+          path: '/'
+        }));
+
+        // res.cookie('myCookie', token, { expire: 86400 })
+        res.send({ token, user: { _id, email, username } })
       } else {
         return res.status(400).json({ error: "Invalid request parameters." })
       }
@@ -86,8 +96,8 @@ export default async function handler(req, res) {
     } else {
       res.status(405).json({ error: "Method not allowed" })
     }
-  } catch (error) {
-    console.error("Error in handler:", error);
-    res.status(500).json({ error: "Internal server error" })
-  }
+  // catch (error) {
+  //   console.error("Error in handler:", error);
+  //   res.status(500).json({ error: "Internal server error" })
+  // }
 }
