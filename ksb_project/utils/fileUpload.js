@@ -1,34 +1,37 @@
-const multer = require('multer')
-let fs = require('fs')      // filesystem
-let path = require('path')
-
+const multer = require('multer');
+const fs = require('fs');
+const path = require('path');
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    let destination = 'public'
-    if(!fs.existsSync(destination)){
-      fs.mkdirSync(destination,{recursive:true})
+    const destination = 'public';
+    if (!fs.existsSync(destination)) {
+      fs.mkdirSync(destination, { recursive: true });
     }
-    cb(null, destination)
+    cb(null, destination);
   },
   filename: function (req, file, cb) {
-    const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9)
-    const ext = path.extname(file.originalname)
-    const filename = path.basename(file.originalname, ext) + uniqueSuffix + ext
-    cb(null, filename)
+    const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
+    const ext = path.extname(file.originalname);
+    const filename = path.basename(file.originalname, ext) + uniqueSuffix + ext;
+    cb(null, filename);
   }
-})
+});
 
-// const fileFilter = (req, file, cb) => {
-//   if (!file.originalname.match(/[.](jpg|JPG)/)) {
-//     cb(new Error("Invalid file format. Only JPG/JPEG files are allowed."), false);
-//   } else {
-//     cb(null, true);
-//   }
-// };
+// Optional: File filter for allowed file types (uncomment if needed)
+const fileFilter = (req, file, cb) => {
+  if (!file.originalname.match(/\.(jpg|jpeg)$/i)) {
+    cb(new Error("Invalid file format. Only JPG/JPEG files are allowed."), false);
+  } else {
+    cb(null, true);
+  }
+};
 
-
-exports.upload = multer({ storage: storage,
-  limits:{
-    fileSize : 2000000
-  }})
+exports.upload = multer({
+  storage: storage,
+  limits: {
+    fileSize: 2000000 // 2 MB
+  },
+  // Optional: Uncomment to use the file filter
+  fileFilter: fileFilter
+});

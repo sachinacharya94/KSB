@@ -1,15 +1,25 @@
 import "../../../Database/connection"
 const Product = require("../../../Models/productModel")
 
+
 export default async function handler(req, res) {
     try {
         if (req.method === "POST") {
+            const { title, about, application, category, capacity, head, temperature, motor_rating, tank_capacity, image } = req.body;
+            if (!title || !about || !application || !category) {
+                return res.status(400).json({ error: "All required fields (title, about, application, category) must be provided" });
+            }
             let productToAdd = await Product.create({
-                title: req.body.title,
-                about: req.body.about,
-                application: req.body.application,
-                image: req.file?.path,
-                category: req.body.category,
+                title,
+                about,
+                application,
+                // image,
+                category,
+                capacity,
+                head,
+                temperature,
+                motor_rating,
+                tank_capacity
             });
             if (!productToAdd) {
                 return res.status(400).json({ error: "Something went wrong" })
@@ -62,3 +72,4 @@ export default async function handler(req, res) {
         res.status(500).json({ error: error.message })
     }
 }
+

@@ -1,5 +1,5 @@
-const mongoose = require("mongoose")
-const { ObjectId } = mongoose.Schema
+const mongoose = require("mongoose");
+const { ObjectId } = mongoose.Schema;
 
 const productSchema = new mongoose.Schema({
     title: {
@@ -15,24 +15,21 @@ const productSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
-    image:{
-        type:String
+    image: {
+        type: String
     },
     capacity: {
         type: String,
-
+        required: true,
     },
     head: {
         type: String,
-
     },
     temperature: {
         type: String,
-
     },
     motor_rating: {
         type: String,
-
     },
     tank_capacity: {
         type: String,
@@ -42,9 +39,6 @@ const productSchema = new mongoose.Schema({
         ref: "Category",
         required: true
     }
-
-
-}, { timestamps: true })
-
+}, { timestamps: true });
 
 module.exports = mongoose.models.Product || mongoose.model("Product", productSchema);

@@ -8,7 +8,7 @@ const Header = () => {
 
             <nav className="bg-white border-gray-200 dark:bg-gray-900">
                 <div className="max-w-screen-xl flex md:flex-wrap md:items-center justify-between mx-auto p-4 mr-0 ">
-                    <img src="/logo.jpg" alt="" />
+                    <Link href='/'><img src="/logo.jpg" alt="" /></Link>    
 
                     <div className="w-full md:block md:w-auto   mr-0" id="navbar-default">
 
