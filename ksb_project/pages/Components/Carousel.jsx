@@ -1,41 +1,44 @@
-import React from "react";
-import Slider from "react-slick";
+import Carousel from "react-multi-carousel";
+import "react-multi-carousel/lib/styles.css";
 
-function Responsive() {
-    var settings = {
-        dots: true,
-        infinite: true,
-        speed: 500,
-        slidesToShow: 1,
-        slidesToScroll: 1,
-
+const Sliders = () => {
+    const responsive = {
+        superLargeDesktop: {
+            // the naming can be any, depends on you.
+            breakpoint: { max: 4000, min: 3000 },
+            items: 5,
+        },
+        desktop: {
+            breakpoint: { max: 3000, min: 1024 },
+            items: 1,
+        },
+        tablet: {
+            breakpoint: { max: 1024, min: 464 },
+            items: 2,
+        },
+        mobile: {
+            breakpoint: { max: 464, min: 0 },
+            items: 1,
+        },
     };
     return (
-        <div className="slider-container">
-            <Slider {...settings}>
-                <div>
-                    <h3>1</h3>
+        <div>
+            <Carousel
+                infinite={true}
+                autoPlay={true}
+                autoPlaySpeed={1000}
+                responsive={responsive}
+                swipeable={true}
+            >
+                <div className=" h-[700px] w-full">
+                    <img src="/web-slider.jpg" alt="pizza" className="h-full w-full " />
                 </div>
-                <div>
-                    <h3>2</h3>
+                <div className=" h-[700px] w-full">
+                    <img src="/web-slider.jpg" alt="pizza" className="h-full w-full " />
                 </div>
-                <div>
-                    <h3>3</h3>
-                </div>
-                <div>
-                    <h3>4</h3>
-                </div>
-                <div>
-                    <h3>5</h3>
-                </div>
-                <div>
-                    <h3>6</h3>
-                </div>
-
-
-            </Slider>
+            </Carousel>
         </div>
     );
-}
+};
 
-export default Responsive;
+export default Sliders;

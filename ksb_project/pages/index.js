@@ -5,7 +5,9 @@ import { getAllCategories } from "./api/categoryAPI";
 import { getAllProduct, getProductByCategory } from "./api/productAPI";
 import Product from "./Components/Product";
 import Link from "next/link";
-import Responsive from "./Components/Carousel";
+
+import Multiarousal from "./Components/Multiarousal";
+import Sliders from "./Components/Carousel";
 
 
 export default function Home() {
@@ -37,8 +39,8 @@ export default function Home() {
 
   return (
     <div  >
-      <Responsive />
-      <div className="w-3/4 m-auto mt-20 text-center relative">
+      <Sliders />
+      <div className="w-3/4 m-auto mt-20 text-center relative mb-5">
         <h1 className="text-4xl font-semibold" >
           OUR PRODUCT
         </h1>
@@ -106,7 +108,7 @@ export default function Home() {
           </div>
         </div>
 
-        <div className="flex flex-row mt-20 gap-10 mb-20">
+        <div className="flex flex-row mt-20 gap-10 mb-10 justify-center items-center">
           <div>
             <h1 className="text-4xl font-semibold ">
               OUR CLIENTS
@@ -119,6 +121,8 @@ export default function Home() {
 
 
         </div>
+
+        <Multiarousal />
       </div>
       <div className="h-36 w-full bg-ksb flex flex-row justify-center items-center gap-32">
         <p className="text-white text-4xl pl-0">Want to be a part of our family?</p>
