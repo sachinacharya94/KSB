@@ -5,10 +5,18 @@ const Product = require("../../../Models/productModel")
 export default async function handler(req, res) {
     try {
         if (req.method === "POST") {
+
             const { title, about, application, category, capacity, head, temperature, motor_rating, tank_capacity, image } = req.body;
             if (!title || !about || !application || !category) {
                 return res.status(400).json({ error: "All required fields (title, about, application, category) must be provided" });
             }
+            const FormData = await req.formdata()
+            // console.log(FormData, 'FormData')
+            const title = FormData.get('title')
+            const about = FormData.get('about')
+            const application = FormData.get('application')
+            const category = FormData.get('category')
+
             let productToAdd = await Product.create({
                 title,
                 about,
@@ -20,6 +28,7 @@ export default async function handler(req, res) {
                 temperature,
                 motor_rating,
                 tank_capacity
+
             });
             if (!productToAdd) {
                 return res.status(400).json({ error: "Something went wrong" })

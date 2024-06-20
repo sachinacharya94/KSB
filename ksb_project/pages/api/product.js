@@ -1,16 +1,26 @@
+
 import "../../Database/connection"
 const Product = require("../../Models/productModel")
 
 export default async function handler(req, res) {
+
+
     try {
         if (req.method === "POST") {
-            console.log(req.body)
+            // const { title, about, application, category } = req.body;
+            // console.log(req.body, "req.body")
             let productToAdd = await Product.create({
                 title: req.body.title,
                 about: req.body.about,
                 application: req.body.application,
                 image: req.file?.path,
                 category: req.body.category,
+                capacity: req.body.capacity,
+                head: req.body.head,
+                temperature: req.body.temperature,
+                motor_rating: req.body.motor_rating,
+                tank_capacity: req.body.tank_capacity
+
             });
             if (!productToAdd) {
                 return res.status(400).json({ error: "Something went wrong" })
