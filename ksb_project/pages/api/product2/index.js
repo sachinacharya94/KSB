@@ -4,12 +4,18 @@ const Product = require("../../../Models/productModel")
 export default async function handler(req, res) {
     try {
         if (req.method === "POST") {
+            const FormData = await req.formdata()
+            // console.log(FormData, 'FormData')
+            const title = FormData.get('title')
+            const about = FormData.get('about')
+            const application = FormData.get('application')
+            const category = FormData.get('category')
             let productToAdd = await Product.create({
-                title: req.body.title,
-                about: req.body.about,
-                application: req.body.application,
-                image: req.file?.path,
-                category: req.body.category,
+                title,
+                about,
+                application,
+                // image,
+                category,
             });
             if (!productToAdd) {
                 return res.status(400).json({ error: "Something went wrong" })

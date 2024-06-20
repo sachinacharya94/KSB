@@ -1,10 +1,14 @@
+
 import "../../Database/connection"
 const Product = require("../../Models/productModel")
 
 export default async function handler(req, res) {
+
+
     try {
         if (req.method === "POST") {
-            console.log(req.body)
+            const { title, about, application, category } = req.body;
+            console.log(req.body, "req.body")
             let productToAdd = await Product.create({
                 title: req.body.title,
                 about: req.body.about,

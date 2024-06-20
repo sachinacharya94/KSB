@@ -3,11 +3,9 @@
 import { useEffect, useState } from "react";
 import { getAllCategories } from "./api/categoryAPI";
 import { getAllProduct, getProductByCategory } from "./api/productAPI";
-import Carousels from "./Components/Carousel";
 import Product from "./Components/Product";
-import Carousel from "react-multi-carousel";
-import "react-multi-carousel/lib/styles.css";
 import Link from "next/link";
+import Responsive from "./Components/Carousel";
 
 
 export default function Home() {
@@ -36,28 +34,10 @@ export default function Home() {
 
   }
 
-  const responsive = {
-    superLargeDesktop: {
-      // the naming can be any, depends on you.
-      breakpoint: { max: 4000, min: 3000 },
-      items: 5
-    },
-    desktop: {
-      breakpoint: { max: 3000, min: 1024 },
-      items: 3
-    },
-    tablet: {
-      breakpoint: { max: 1024, min: 464 },
-      items: 2
-    },
-    mobile: {
-      breakpoint: { max: 464, min: 0 },
-      items: 1
-    }
-  };
+
   return (
     <div  >
-      <Carousels />
+      <Responsive />
       <div className="w-3/4 m-auto mt-20 text-center relative">
         <h1 className="text-4xl font-semibold" >
           OUR PRODUCT
@@ -75,16 +55,35 @@ export default function Home() {
           }
 
         </div>
-        <div className="flex md:flex-row md:gap-4 mb-12 mt-10 justify-center items-center ">
-          {
-            products.map((product) => {
+        {
+          productsBasedOnCategory ? <>
+            <div className="flex md:flex-row md:gap-4 mb-12 mt-10 justify-center items-center md:flex-wrap ">
+              {
+                productsBasedOnCategory.map((product) => {
 
-              return <Product product={product} />
-            })
-          }
+                  return <Product product={product} />
+                })
+              }
 
 
-        </div>
+            </div>
+          </>
+            :
+            <>
+
+              <div className="flex md:flex-row md:gap-4 mb-12 mt-10 justify-center items-center md:flex-wrap ">
+                {
+                  products.map((product) => {
+
+                    return <Product product={product} />
+                  })
+                }
+
+
+              </div>
+            </>
+        }
+
         <div className="mt-20">
           <h1 className="text-4xl font-semibold ">
             ABOUT KSB
@@ -117,14 +116,7 @@ export default function Home() {
               We are associated with
             </p>
           </div>
-          <div>
-            <Carousel responsive={responsive}>
-              <div>Item 1</div>
-              <div>Item 2</div>
-              <div>Item 3</div>
-              <div>Item 4</div>
-            </Carousel>;
-          </div>
+
 
         </div>
       </div>

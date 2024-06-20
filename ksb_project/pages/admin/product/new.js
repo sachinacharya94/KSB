@@ -6,6 +6,8 @@ import Swal from 'sweetalert2';
 
 const add_Product = () => {
     let [categorys, setCategorys] = useState([]);
+    let formdata = new FormData
+
 
     let [product, setProduct] = useState({
         title: "",
@@ -37,16 +39,21 @@ const add_Product = () => {
         });
 
 
+
     }, []);
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        let formdata = new FormData
+        // let formdata = new FormData()
 
         formdata.set("title", title);
         formdata.set("category", category);
         formdata.set("about", about);
         formdata.set("application", application);
+
+        for (let item of formdata) {
+            console.log(item[0], item[1])
+        }
 
         addProduct(formdata).then((data => {
             if (data && data.error) {
