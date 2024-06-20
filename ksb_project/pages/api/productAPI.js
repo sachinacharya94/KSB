@@ -47,12 +47,13 @@ export const addProduct = (product) => {
 
 
 export const updateProduct = (id, product) => {
+    console.log(product)
     return fetch(`/api/product?product=${id}`, {
         method: "PATCH",
-        headers: {
-            accept: "Application/json",
-            "Content-Type": "application/json",
-        },
+        // headers: {
+        //     accept: "Application/json",
+        //     "Content-Type": "application/json",
+        // },
         body: product
     })
         .then(res => res.json())

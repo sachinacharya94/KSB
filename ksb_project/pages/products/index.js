@@ -46,11 +46,11 @@ const index = () => {
           }
 
         </div>
-        <div className="flex md:flex-row md:gap-4 mb-12 mt-10 justify-center items-center ">
+        <div className="flex md:flex-row md:gap-16 mb-12 mt-10 justify-center items-center flex-wrap ">
           {
             products.map((product) => {
 
-              return <Product product={product} />
+              return <Product key={product._id} product={product} />
             })
           }
 

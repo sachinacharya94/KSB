@@ -21,7 +21,7 @@ const edit_Product = () => {
     //     formdata: new FormData,
     // });
 
-    let { formdata, title, category, about, application } = productById;
+    let { title, category, about, application } = productById;
 
 
 
@@ -33,11 +33,11 @@ const edit_Product = () => {
 
     const handleChange = (e) => {
         if (e.target.name === "image") {
-            formdata.set('image', e.target.files[0])
-            formdata.set('imageUrl', productById.image)
+            // formdata.set('image', e.target.files[0])
+            // formdata.set('imageUrl', productById.image)
         }
         else {
-            formdata.set(e.target.name, e.target.value)
+            // formdata.set(e.target.name, e.target.value)
             setProductById({ ...productById, [e.target.name]: e.target.value });
         }
 
@@ -53,7 +53,7 @@ const edit_Product = () => {
 
         getProductById(id).then((data) => {
             if (data) {
-                setProductById({ ...data, formdata: new FormData })
+                setProductById(data)
             }
         }
         )
@@ -64,25 +64,31 @@ const edit_Product = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        // formdata.set("title", title);
-        // formdata.set("category", category);
-        // formdata.set("about", about);
-        // formdata.set("application", application);
+        const formData = new FormData()
 
-        updateProduct(formdata).then((data => {
-            if (data.error) {
+        formData.append("title", title);
+        formData.append("category", category);
+        formData.append("about", about);
+        formData.append("application", application);
+
+        for (let item of formData) {
+            console.log(item[0], item[1])
+        }
+
+        updateProduct(id, formData).then((data => {
+            if (data && data.error) {
                 setError(data.error);
                 setSuccess(false);
             } else {
                 setSuccess(true);
-                setProduct({
+                setProductById({
                     title: "",
                     price: "",
                     description: "",
                     count_in_stock: "",
                 });
-                sel_ref.current.value = "";
-                file_ref.current.value = "";
+                // sel_ref.current.value = "";
+                // file_ref.current.value = "";
                 setError("");
             }
         }))
