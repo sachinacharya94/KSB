@@ -26,6 +26,7 @@ const index = () => {
                 else {
                     setSuccess(true)
                     authenticate(data)
+
                 }
                 console.log(data, "DATA")
             })
