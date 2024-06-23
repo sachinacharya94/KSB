@@ -80,8 +80,9 @@ export default async function handler(req, res) {
           path: '/'
         }));
 
+
         // res.cookie('myCookie', token, { expire: 86400 })
-        res.send({ token, user: { _id, email, username } })
+        res.send({ token, user: { _id, email , username } })
       } else {
         return res.status(400).json({ error: "Invalid request parameters." })
       }
