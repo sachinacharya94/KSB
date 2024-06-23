@@ -1,11 +1,10 @@
 import React from 'react'
-import Sidebar from '../Components/Admin/Sidebar'
 
 const dashboard = () => {
 
     return (
         <>
-            <Sidebar />
+            <p>Welcome to dashboard</p>
 
 
         </>

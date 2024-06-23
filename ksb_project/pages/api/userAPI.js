@@ -37,6 +37,8 @@ export const getUser = () => {
 
 }
 
-export const authenticate = (data) => {
+export const authenticate = async (data) => {
   localStorage.setItem("jwt", JSON.stringify(data))
+  let authenticated = await JSON.parse(localStorage.getItem('jwt'))
+  return true
 }

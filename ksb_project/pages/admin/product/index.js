@@ -92,7 +92,7 @@ const index = () => {
                                     >
                                         {i + 1}
                                     </th>
-                                    <td class="px-6 py-4">{product.title}</td>
+                                    <td class="px-6 py-4">{product.product_title}</td>
                                     <td class="px-6 py-4">{product?.category?.category_name}</td>
                                     <td class="px-6 py-4 ">
                                         <img src='/one.jpg' className='h-[100px] w-[100px]' />

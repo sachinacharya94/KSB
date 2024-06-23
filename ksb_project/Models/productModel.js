@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 const { ObjectId } = mongoose.Schema;
 
 const productSchema = new mongoose.Schema({
-    title: {
+    product_title: {
         type: String,
         trim: true,
         required: true,
@@ -20,7 +20,7 @@ const productSchema = new mongoose.Schema({
     },
     capacity: {
         type: String,
-        required: true,
+
     },
     head: {
         type: String,

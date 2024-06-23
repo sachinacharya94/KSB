@@ -21,7 +21,7 @@ const edit_Product = () => {
     //     formdata: new FormData,
     // });
 
-    let { title, category, about, application } = productById;
+    let { product_title, category, about, application } = productById;
 
 
 
@@ -66,7 +66,7 @@ const edit_Product = () => {
         e.preventDefault();
         const formData = new FormData()
 
-        formData.append("title", title);
+        formData.append("product_title", product_title);
         formData.append("category", category);
         formData.append("about", about);
         formData.append("application", application);
@@ -82,7 +82,7 @@ const edit_Product = () => {
             } else {
                 setSuccess(true);
                 setProductById({
-                    title: "",
+                    product_title: "",
                     price: "",
                     description: "",
                     count_in_stock: "",
@@ -142,8 +142,8 @@ const edit_Product = () => {
                                     </label>
                                     <input
                                         type="text"
-                                        name="title"
-                                        value={productById.title}
+                                        name="product_title"
+                                        value={productById.product_title}
                                         id="name"
                                         className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                                         placeholder="Type product name"

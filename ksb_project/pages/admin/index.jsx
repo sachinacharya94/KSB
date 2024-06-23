@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { authenticate, login } from '../api/userAPI'
 import Swal from 'sweetalert2'
+import { useRouter } from 'next/router'
 
 const index = () => {
     let [error, setError] = useState("")
@@ -10,6 +11,7 @@ const index = () => {
         email: "",
         password: ""
     })
+    const router = useRouter()
 
     const handleChange = (e) => {
         setUser({ ...user, [e.target.name]: e.target.value })
@@ -26,9 +28,12 @@ const index = () => {
                 else {
                     setSuccess(true)
                     authenticate(data)
+                        .then(() =>
+                            router.push("/admin/dashboard")
+                        )
 
                 }
-                console.log(data, "DATA")
+
             })
 
 
