@@ -10,7 +10,7 @@ export default async function handler(req, res) {
             // const { title, about, application, category } = req.body;
             // console.log(req.body, "req.body")
             let productToAdd = await Product.create({
-                title: req.body.title,
+                product_title: req.body.product_title,
                 about: req.body.about,
                 application: req.body.application,
                 image: req.file?.path,
@@ -49,7 +49,7 @@ export default async function handler(req, res) {
         }
         else if (req.method == "PATCH") {
             let productToUpdate = await Product.findByIdAndUpdate(req.query.id, {
-                title: req.body.title,
+                product_title: req.body.product_title,
                 about: req.body.about,
                 application: req.body.application,
                 category: req.body.category,

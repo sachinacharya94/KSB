@@ -46,16 +46,34 @@ const index = () => {
           }
 
         </div>
-        <div className="flex md:flex-row md:gap-16 mb-12 mt-10 justify-center items-center flex-wrap ">
-          {
-            products.map((product) => {
+        {
+          productsBasedOnCategory.length > 0 ? <>
+            <div className="flex md:flex-row md:gap-12 mb-12 mt-10 justify-center items-center md:flex-wrap ">
+              {
+                productsBasedOnCategory.map((product) => {
 
-              return <Product key={product._id} product={product} />
-            })
-          }
+                  return <Product product={product} />
+                })
+              }
 
 
-        </div>
+            </div>
+          </>
+            :
+            <>
+
+              <div className="flex md:flex-row md:gap-12 mb-12 mt-10 justify-center items-center md:flex-wrap ">
+                {
+                  products.slice(0, 10).map((product) => {
+
+                    return <Product product={product} />
+                  })
+                }
+
+
+              </div>
+            </>
+        }
       </div>
     </>
   );

@@ -6,11 +6,11 @@ import Swal from 'sweetalert2';
 
 const add_Product = () => {
     let [categorys, setCategorys] = useState([]);
-    let formdata = new FormData
+    let formdata = new URLSearchParams()
 
 
     let [product, setProduct] = useState({
-        title: "",
+        product_title: "",
         category: "",
         about: "",
         application: '',
@@ -18,10 +18,10 @@ const add_Product = () => {
     });
 
     // let { formdata, title, category, about, application } = product;
-    let { title, category, about, application } = product;
+    let { product_title, category, about, application } = product;
 
     let [error, setError] = useState("");
-    let [success, setSuccess] = useState("false");
+    let [success, setSuccess] = useState(false);
 
 
     const handleChange = (e) => {
@@ -46,10 +46,10 @@ const add_Product = () => {
         e.preventDefault();
         // let formdata = new FormData()
 
-        formdata.set("title", title);
-        formdata.set("category", category);
-        formdata.set("about", about);
-        formdata.set("application", application);
+        formdata.append("product_title", product_title);
+        formdata.append("category", category);
+        formdata.append("about", about);
+        formdata.append("application", application);
 
         for (let item of formdata) {
             console.log(item[0], item[1])
@@ -62,7 +62,7 @@ const add_Product = () => {
             } else {
                 setSuccess(true);
                 setProduct({
-                    title: "",
+                    product_title: "",
                     price: "",
                     description: "",
                     count_in_stock: "",
@@ -112,8 +112,8 @@ const add_Product = () => {
                         </div>
 
                         <form>
-                            {showError}
-                            {showSuccess}
+                            {showError()}
+                            {showSuccess()}
                             <div className="grid gap-4 mb-4 sm:grid-cols-2">
                                 <div>
                                     <label
@@ -124,7 +124,7 @@ const add_Product = () => {
                                     </label>
                                     <input
                                         type="text"
-                                        name="title"
+                                        name="product_title"
 
                                         id="name"
                                         className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"

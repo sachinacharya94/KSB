@@ -11,7 +11,7 @@ const products = () => {
     getProductById(id)
       .then(data => setProduct(data))
       .catch(err => console.log(err))
-  }, [])
+  }, [id])
   console.log(product)
   return (
     <div>
