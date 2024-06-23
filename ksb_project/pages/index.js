@@ -52,7 +52,7 @@ export default function Home() {
             categories.map((category) => {
               return (
 
-                <button href="#" className="  block py-1 px-5 text-gray-100 bg-white rounded-lg md:bg-transparent md:text-gray-400 md:px-5 md:py-1 dark:text-white md:dark:text-blue-500 hover:md:bg-ksb hover:md:text-white hover:duration-200 md:border-solid md:border-[1px] md:border-gray-700  " aria-current="page" onClick={() => handleClick(category._id)} >{category.category_name}</button>
+                <button href="#" className="  block py-1 px-5 text-gray-100 bg-white rounded-lg md:bg-transparent md:text-gray-400 md:px-5 md:py-1 dark:text-white md:dark:text-blue-500 hover:md:bg-ksb hover:md:text-white hover:duration-200 md:border-solid md:border-[1px] md:border-gray-700  " aria-current="page" onClick={() => handleClick(category._id)}>{category.category_name}</button>
               )
             })
           }

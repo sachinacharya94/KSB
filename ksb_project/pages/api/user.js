@@ -53,8 +53,16 @@ export default async function handler(req, res) {
     else if (email && password) {
       let user = await User.findOne({ email })
 
+
+
+        // res.cookie('myCookie', token, { expire: 86400 })
+        res.send({ token, user: { _id, email , username } })
+      } else {
+        return res.status(400).json({ error: "Invalid request parameters." })
+
       if (!user) {
         return res.status(400).json({ error: "Email not registered" })
+
       }
 
       const validPassword = await bcrypt.compare(password, user.password)
