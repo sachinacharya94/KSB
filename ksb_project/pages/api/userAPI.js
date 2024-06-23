@@ -32,7 +32,11 @@ export const login = (user) => {
 export const getUser = () => {
   return fetch('/api/user')
 
-  .then(res=>res.json())
-  .catch(err=>console.log(err))
+    .then(res => res.json())
+    .catch(err => console.log(err))
 
+}
+
+export const authenticate = (data) => {
+  localStorage.setItem("jwt", JSON.stringify(data))
 }

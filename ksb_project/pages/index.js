@@ -26,7 +26,8 @@ export default function Home() {
 
   // console.log(categori6661c8e544b96bf31b45981ces, "Categories")
   // console.log(products, "products")
-  console.log(productsBasedOnCategory, "productsBasedOnCategory")
+  // console.log(productsBasedOnCategory, "productsBasedOnCategory")
+  // console.log(products, "products")
 
   const handleClick = (id) => {
     // console.log(id, "id")
@@ -58,10 +59,10 @@ export default function Home() {
 
         </div>
         {
-          productsBasedOnCategory ? <>
+          productsBasedOnCategory.length > 0 ? <>
             <div className="flex md:flex-row md:gap-4 mb-12 mt-10 justify-center items-center md:flex-wrap ">
               {
-                productsBasedOnCategory.map((product) => {
+                productsBasedOnCategory.slice(0, 2).map((product) => {
 
                   return <Product product={product} />
                 })
@@ -75,7 +76,7 @@ export default function Home() {
 
               <div className="flex md:flex-row md:gap-4 mb-12 mt-10 justify-center items-center md:flex-wrap ">
                 {
-                  products.map((product) => {
+                  products.slice(0, 2).map((product) => {
 
                     return <Product product={product} />
                   })
@@ -126,7 +127,9 @@ export default function Home() {
       </div>
       <div className="h-36 w-full bg-ksb flex flex-row justify-center items-center gap-32">
         <p className="text-white text-4xl pl-0">Want to be a part of our family?</p>
-        <button className=" text-3xl block py-1 px-5 text-gray-100 bg-white rounded-lg md:bg-transparent md:text-white md:px-5 md:py-1 dark:text-white md:dark:text-blue-500 hover:md:bg-white hover:md:text-ksb hover:duration-200 md:border-solid md:border-[1px] md:border-white ">Contact us now</button>
+        <Link href="/contact">
+          <button className=" text-3xl block py-1 px-5 text-gray-100 bg-white rounded-lg md:bg-transparent md:text-white md:px-5 md:py-1 dark:text-white md:dark:text-blue-500 hover:md:bg-white hover:md:text-ksb hover:duration-200 md:border-solid md:border-[1px] md:border-white ">Contact us now</button>
+        </Link>
 
       </div>
     </div>
