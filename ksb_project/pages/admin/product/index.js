@@ -13,6 +13,7 @@ const index = () => {
     useEffect(() => {
         getAllProduct().then((data) => {
             if (data) {
+                console.log(data)
                 setProducts(data);
             }
         });
@@ -95,7 +96,7 @@ const index = () => {
                                     <td class="px-6 py-4">{product.product_title}</td>
                                     <td class="px-6 py-4">{product?.category?.category_name}</td>
                                     <td class="px-6 py-4 ">
-                                        <img src='/one.jpg' className='h-[100px] w-[100px]' />
+                                        <img src={`http://localhost:3000/${product?.image}`} className='h-[100px] w-[100px]' alt={product.image}/>
                                     </td>
                                     <td class="px-6 py-4 flex items-center">
                                         <Link

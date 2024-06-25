@@ -41,7 +41,7 @@ export default async function handler(req, res) {
                 return res.send(product);
             } else {
 
-                let products = await Product.find().populate('category', 'category_name')
+                let products = await Product.find()
 
                 res.send(products);
             }
