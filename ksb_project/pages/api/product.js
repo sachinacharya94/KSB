@@ -1,6 +1,7 @@
 
 import "../../Database/connection"
 const Product = require("../../Models/productModel")
+const fs = require("fs")
 
 export default async function handler(req, res) {
 
@@ -41,7 +42,7 @@ export default async function handler(req, res) {
                 return res.send(product);
             } else {
 
-                let products = await Product.find()
+                let products = await Product.find().populate("category")
 
                 res.send(products);
             }
@@ -61,6 +62,12 @@ export default async function handler(req, res) {
         }
         else if (req.method == "DELETE") {
             let deleteProduct = await Product.findByIdAndDelete(req.query.id)
+            try {
+                // fs.unlink(`public/${deleteProduct.image}`)
+                fs.unlink(`/assets/uploads/1719383939466_earth.jpg`)
+            } catch (error) {
+                console.log(error.message)
+            }
             if (!deleteProduct) {
                 return res.status(400).json({ error: "Something went wrong." })
             }
