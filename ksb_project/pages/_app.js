@@ -10,7 +10,7 @@ export default function App({ Component, pageProps }) {
   getUser()
     .then(user => {
       console.log(user, "user from local storage")
-      if (user) {
+      if (user) { 
         setClient(true)
       }
       else {
