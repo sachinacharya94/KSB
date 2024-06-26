@@ -1,11 +1,10 @@
 import React, { useState } from 'react'
-import { authenticate, login } from '../api/userAPI'
+import { authenticate, isAuthenticated, login } from '../api/userAPI'
 import Swal from 'sweetalert2'
-import { useRouter } from 'next/router'
+import { useRouter } from 'next/navigation'
 
 const index = () => {
     let [error, setError] = useState("")
-    let [success, setSuccess] = useState(false)
     let [user, setUser] = useState({
 
         email: "",
@@ -21,16 +20,21 @@ const index = () => {
         e.preventDefault()
         login(user)
             .then(data => {
+
                 if (data && data.error) {
                     console.log(data, "login")
                     setError(data.error)
                 }
                 else {
-                    setSuccess(true)
+
                     authenticate(data)
-                        .then(() =>
-                            router.push("/admin/dashboard")
-                        )
+                    console.log('test')
+
+                    router.push("/admin/dashboard")
+
+                    console.log('test')
+
+
 
                 }
 

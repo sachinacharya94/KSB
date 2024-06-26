@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import { deleteMessage, getAllMessages } from '../api/contactAPI'
 import Swal from 'sweetalert2'
+import { useRouter } from 'next/navigation'
 
 const message_one = () => {
     let [messages, setMessages] = useState([])
+    let router = useRouter()
 
     useEffect(() => {
         getAllMessages()
@@ -13,17 +15,39 @@ const message_one = () => {
             })
     }, [])
     console.log(messages, "Messages")
-    const handleDelete = (id) => {
-        deleteMessage(id)
-            .then(data => {
-                if (data && data.error) {
-                    Swal.fire("Error", data.error, "error")
+    const handleDelete = (id) => (e) => {
+        e.preventDefault()
+        Swal.fire({
+            title: "Confirm ",
+            text: "Are you sure you want to delete this category?",
+            icon: "question",
+            showCancelButton: true,
+            cancelButtonColor: '#dd1111',
+            confirmButtonText: "OK, Delete!",
+            position: "center",
+            // timer:1000,
+        })
+
+
+            .then(result => {
+                if (result.isConfirmed) {
+                    deleteMessage(id)
+                        .then(data => {
+                            if (data.error) {
+                                Swal.fire("Error", data.error, 'error')
+                            }
+                            else {
+                                Swal.fire("Success", data.message, 'success')
+                                    .then(data => {
+                                        router.refresh()
+                                    })
+                            }
+                        })
                 }
                 else {
-                    Swal.fire("Success", "Message Deleted Successfully", "success")
+                    Swal.fire("Cancelled", "Nothing is deleted ", 'info')
                 }
-            }
-            )
+            })
     }
     return (
         <div>

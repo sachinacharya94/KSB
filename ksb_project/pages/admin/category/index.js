@@ -16,7 +16,7 @@ const category_page = () => {
 
     console.log(categories)
 
-    const handleDelete = id => e => {
+    const handleDelete = (id) => (e) => {
         e.preventDefault()
         Swal.fire({
             title: "Confirm ",
