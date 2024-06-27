@@ -3,6 +3,7 @@ import { addProduct } from '@/pages/api/productAPI';
 import Link from 'next/link';
 import React, { useEffect, useState } from 'react'
 import Swal from 'sweetalert2';
+import { Editor } from '@tinymce/tinymce-react';
 
 const add_Product = () => {
     let [categorys, setCategorys] = useState([]);
@@ -19,11 +20,13 @@ const add_Product = () => {
     });
     const [message, setMessage] = useState('');
 
+    // for (let [key, value] of formData) {
+    //     console.log(`${key}: ${value}`)
+    // }
     const handleChange = (e) => {
         const { name, value } = e.target;
         setFormData({
-            ...formData,
-            [name]: value,
+            ...formData, [name]: value,
         });
     };
 
@@ -34,6 +37,10 @@ const add_Product = () => {
         });
     };
 
+    const handleEditorChange = (content, editor) => {
+        const { id } = editor;
+        setFormData({ ...formData, [id]: content })
+    }
 
 
     let [error, setError] = useState("");
@@ -106,6 +113,8 @@ const add_Product = () => {
 
 
 
+
+
     return (
         <>
             <div
@@ -123,13 +132,13 @@ const add_Product = () => {
                         <div className="flex justify-between items-center pb-4 mb-4 rounded-t border-b sm:mb-5 dark:border-gray-600">
                             <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
                                 Add New Product
-                            </h3>     
+                            </h3>
                             {showError()}
                             {showSuccess()}
                         </div>
 
                         <form onSubmit={handleSubmit}>
-                       
+
                             <div className="grid gap-4 mb-4 sm:grid-cols-2">
 
                                 <div>
@@ -147,7 +156,7 @@ const add_Product = () => {
                                 </div>
                                 <div>
                                     <label htmlFor="about" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">About:</label>
-                                    <input
+                                    {/* <input
                                         type="text"
                                         id="about"
                                         name="about"
@@ -156,8 +165,29 @@ const add_Product = () => {
                                         className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                                         placeholder="Type product name"
                                         required=""
+                                    /> */}
+                                    <Editor
+                                        apiKey='19m7bc67maqca1olojnw5zzrphaac5oh1r0hgrkq2jfv5y5v'
+                                        init={{
+                                            plugins: 'anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount checklist mediaembed casechange export formatpainter pageembed linkchecker a11ychecker tinymcespellchecker permanentpen powerpaste advtable advcode editimage advtemplate ai mentions tinycomments tableofcontents footnotes mergetags autocorrect typography inlinecss markdown',
+                                            toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table mergetags | addcomment showcomments | spellcheckdialog a11ycheck typography | align lineheight | checklist numlist bullist indent outdent | emoticons charmap | removeformat',
+                                            tinycomments_mode: 'embedded',
+                                            tinycomments_author: 'Author name',
+                                            // mergetags_list: [
+                                            //     { value: formData.about, title: 'about' },
+
+                                            // ],
+                                            ai_request: (request, respondWith) => respondWith.string(() => Promise.reject("See docs to implement AI Assistant")),
+                                        }}
+                                        initialValue={formData.about}
+                                        id="about"
+                                        name="about"
+                                        // value={formData.about}
+                                        // onChange={handleChange}
+                                        onEditorChange={handleEditorChange}
                                     />
                                 </div>
+
                                 <div>
                                     <label htmlFor="application" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">application:</label>
                                     <input
@@ -261,30 +291,30 @@ const add_Product = () => {
 
 
                                 </div>
-                                <button 
-                                onClick={handleSubmit}
-                                type="add"
-                                className="text-white inline-flex items-center bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800 col-span-2"
-                            >
-                                <svg
-                                    className="mr-1 -ml-1 w-6 h-6"
-                                    fill="currentColor"
-                                    viewBox="0 0 20 20"
-                                    xmlns="http://www.w3.org/2000/svg"
+                                <button
+                                    onClick={handleSubmit}
+                                    type="add"
+                                    className="text-white inline-flex items-center bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800 col-span-2"
                                 >
-                                    <path
-                                        fill-rule="evenodd"
-                                        d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z"
-                                        clip-rule="evenodd"
-                                    ></path>
-                                </svg>
-                                Add new product
-                            </button>
+                                    <svg
+                                        className="mr-1 -ml-1 w-6 h-6"
+                                        fill="currentColor"
+                                        viewBox="0 0 20 20"
+                                        xmlns="http://www.w3.org/2000/svg"
+                                    >
+                                        <path
+                                            fill-rule="evenodd"
+                                            d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z"
+                                            clip-rule="evenodd"
+                                        ></path>
+                                    </svg>
+                                    Add new product
+                                </button>
                                 {message && <p className='text-red-600'>{message}</p>}
                             </div>
                         </form>
 
-                       
+
                     </div>
                 </div>
             </div>
