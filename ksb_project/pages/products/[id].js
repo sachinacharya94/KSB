@@ -6,7 +6,7 @@ const products = () => {
   let params = useParams()
   const id = params?.id
   const [product, setProduct] = useState({})
-  let { title, about, application, head, temperature, motor_rating, capacity } = product
+  let { product_title, about, application, head, temperature, motor_rating, capacity } = product
   useEffect(() => {
     getProductById(id)
       .then(data => setProduct(data))
@@ -17,14 +17,14 @@ const products = () => {
     <div>
       <div className='relative'>
         <img src="/one.jpg" alt="" className='h-40 w-full object-cover' />
-        <p className='absolute text-white top-6 left-52 text-4xl font-semibold '> {title}wwd </p>
-        <p className='absolute text-white top-16 left-52'>Home/<span className='text-orange-500'>{title}</span></p>
+        <p className='absolute text-white top-6 left-52 text-4xl font-semibold '> {product_title} </p>
+        <p className='absolute text-white top-16 left-52'>Home/<span className='text-orange-500'>{product_title}</span></p>
       </div>
 
       <div className='w-[60%] mx-auto mt-10 '>
-        <img src="/one.jpg" alt={title} className='h-48 w-48 object-cover m-auto' />
+        <img src={`http://localhost:3000/${product.image}`} alt={product_title} className='h-48   m-auto' />
         <hr />
-        <h1 className='mt-3 mb-2'>{title}</h1>
+        <h1 className='mt-3 mb-2'>{product_title}</h1>
         <h4><u>About:</u></h4>
         <p className='mb-4'>{about}</p>
         <h4><u>Application:</u></h4>
