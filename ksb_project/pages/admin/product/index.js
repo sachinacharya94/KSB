@@ -96,8 +96,9 @@ const index = () => {
                                     <td class="px-6 py-4">{product.product_title}</td>
                                     <td class="px-6 py-4">{product?.category?.category_name}</td>
                                     <td class="px-6 py-4 ">
-                                        <img src={`http://localhost:3000/${product?.image}`} className='h-[100px] w-[100px]' alt={product.image}/>
+                                        <img src={`http://localhost:3000/${product?.image}`} className='h-[100px] w-[100px]' alt={product.image} />
                                     </td>
+                                    {console.log(process.env.URL)}
                                     <td class="px-6 py-4 flex items-center">
                                         <Link
                                             href={`/admin/product/edit/${product._id}`}

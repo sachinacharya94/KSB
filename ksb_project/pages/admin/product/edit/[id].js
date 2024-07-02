@@ -7,11 +7,22 @@ import React, { useEffect, useState } from 'react'
 const edit_Product = () => {
 
     let [categorys, setCategorys] = useState([]);
-    let [productById, setProductById] = useState({});
+    // let [productById, setProductById] = useState({});
     const params = useParams()
     let id = params?.id;
+    const [formData, setFormData] = useState({
+        product_title: '',
+        about: '',
+        application: '',
+        capacity: '',
+        head: '',
+        temperature: '',
+        tank_capacity: '',
+        capacity: '',
+        file: null,
+    });
 
-
+    const [message, setMessage] = useState('');
 
     // let [product, setProduct] = useState({
     //     title: "",
@@ -21,27 +32,30 @@ const edit_Product = () => {
     //     formdata: new FormData,
     // });
 
-    let { product_title, category, about, application } = productById;
+    // const { product_title, category, about, application } = productById;
 
 
 
     let [error, setError] = useState("");
     let [success, setSuccess] = useState("false");
 
-    console.log(productById, "Product By IDDDDDD")
+    // console.log(productById, "Product By IDDDDDD")
 
 
     const handleChange = (e) => {
-        if (e.target.name === "image") {
-            // formdata.set('image', e.target.files[0])
-            // formdata.set('imageUrl', productById.image)
-        }
-        else {
-            // formdata.set(e.target.name, e.target.value)
-            setProductById({ ...productById, [e.target.name]: e.target.value });
-        }
+        const { name, value } = e.target;
+        setFormData({
+            ...formData, [name]: value,
+        });
 
     };
+    const handleFileChange = (e) => {
+        setFormData({
+            ...formData,
+            file: e.target.files[0],
+        });
+    };
+
 
     useEffect(() => {
 
@@ -53,7 +67,7 @@ const edit_Product = () => {
 
         getProductById(id).then((data) => {
             if (data) {
-                setProductById(data)
+                setFormData(data)
             }
         }
         )
@@ -62,37 +76,64 @@ const edit_Product = () => {
 
     }, []);
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        const formData = new FormData()
-
-        formData.append("product_title", product_title);
-        formData.append("category", category);
-        formData.append("about", about);
-        formData.append("application", application);
-
-        for (let item of formData) {
-            console.log(item[0], item[1])
+        if (!formData.file) {
+            setMessage('Please select a file.');
+            return;
         }
+        const formPayload = new FormData();
 
-        updateProduct(id, formData).then((data => {
-            if (data && data.error) {
-                setError(data.error);
-                setSuccess(false);
-            } else {
-                setSuccess(true);
-                setProductById({
-                    product_title: "",
-                    price: "",
-                    description: "",
-                    count_in_stock: "",
-                });
-                // sel_ref.current.value = "";
-                // file_ref.current.value = "";
-                setError("");
-            }
-        }))
-    }
+        formPayload.append('product_title', formData.product_title);
+        formPayload.append('about', formData.about);
+        formPayload.append('application', formData.application);
+        formPayload.append('capacity', formData.capacity);
+        formPayload.append('head', formData.head);
+        formPayload.append('temperature', formData.temperature);
+        formPayload.append('tank_capacity', formData.tank_capacity);
+        formPayload.append('category', formData.category);
+        formPayload.append('file', formData.file);
+
+        // for (let item of formData) {
+        //     console.log(item[0], item[1])
+        // }
+
+        // updateProduct(id, formData).then((data => {
+        //     if (data && data.error) {
+        //         setError(data.error);
+        //         setSuccess(false);
+        //     } else {
+        //         setSuccess(true);
+        //         setProductById({
+        //             product_title: "",
+        //             price: "",
+        //             description: "",
+        //             count_in_stock: "",
+        //         });
+        //         // sel_ref.current.value = "";
+        //         // file_ref.current.value = "";
+        //         setError("");
+        //     }
+        // }))
+
+        fetch(`/api/upload?id=${id}`, {
+            method: 'PATCH',
+            body: formPayload,
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (data.error) {
+                    setError(data.error);
+                } else {
+                    setSuccess("Product Added Successfully");
+                }
+            })
+            .catch(error => {
+                setMessage('Form submission error');
+                console.error('Form submission error:', error);
+            })
+    };
+
 
     const showError = () => {
         if (error) {
@@ -129,7 +170,7 @@ const edit_Product = () => {
                             </h3>
                         </div>
 
-                        <form>
+                        <form onSubmit={handleSubmit}>
                             {showError}
                             {showSuccess}
                             <div className="grid gap-4 mb-4 sm:grid-cols-2">
@@ -143,7 +184,7 @@ const edit_Product = () => {
                                     <input
                                         type="text"
                                         name="product_title"
-                                        value={productById.product_title}
+                                        value={formData.product_title}
                                         id="name"
                                         className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                                         placeholder="Type product name"
@@ -161,7 +202,7 @@ const edit_Product = () => {
                                     <input
                                         type="text"
                                         name="about"
-                                        value={productById.about}
+                                        value={formData.about}
                                         id="name"
                                         className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                                         placeholder="Type product name"
@@ -179,7 +220,7 @@ const edit_Product = () => {
                                     <input
                                         type="text"
                                         name="application"
-                                        value={productById.application}
+                                        value={formData.application}
                                         id="name"
                                         className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                                         placeholder="Type product name"
@@ -187,7 +228,59 @@ const edit_Product = () => {
                                         onChange={handleChange}
                                     />
                                 </div>
+                                <div>
+                                    <label htmlFor="capacity" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">capacity:</label>
+                                    <input
+                                        type="text"
+                                        id="capacity"
+                                        name="capacity"
+                                        value={formData.capacity}
+                                        onChange={handleChange}
+                                        className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                                        placeholder="Type product name"
+                                        required=""
+                                    />
+                                </div>
+                                <div>
+                                    <label htmlFor="head" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">head:</label>
+                                    <input
+                                        type="text"
+                                        id="head"
+                                        name="head"
+                                        value={formData.head}
+                                        onChange={handleChange}
+                                        className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                                        placeholder="Type product name"
+                                        required=""
+                                    />
+                                </div>
+                                <div>
+                                    <label htmlFor="temperature" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">temperature:</label>
+                                    <input
+                                        type="text"
+                                        id="temperature"
+                                        name="temperature"
+                                        value={formData.temperature}
+                                        onChange={handleChange}
+                                        className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                                        placeholder="Type product name"
+                                        required=""
+                                    />
+                                </div>
+                                <div>
+                                    <label htmlFor="tank_capacity" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">tank_capacity:</label>
+                                    <input
+                                        type="text"
+                                        id="tank_capacity"
+                                        name="tank_capacity"
+                                        value={formData.tank_capacity}
+                                        onChange={handleChange}
+                                        className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                                        placeholder="Type product name"
+                                        required=""
 
+                                    />
+                                </div>
 
 
                                 <div>
@@ -201,7 +294,7 @@ const edit_Product = () => {
                                     <select
                                         type="text"
                                         name="category"
-                                        value={productById.category}
+                                        value={formData.category}
                                         id="name"
                                         className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                                         placeholder="Type count in stock"
@@ -220,11 +313,19 @@ const edit_Product = () => {
                                         })}
                                     </select>
                                 </div>
+                                <div className='col-span-2'>
+
+                                    <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="file_input">Upload file</label>
+                                    <input class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" id="file" type="file" name='file' onChange={handleFileChange} required />
+
+
+
+                                </div>
 
 
                             </div>
                             <button
-                                onClick={handleSubmit}
+                                // onClick={handleSubmit}
                                 type="add"
                                 className="text-white inline-flex items-center bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800  "
                             >
@@ -249,5 +350,6 @@ const edit_Product = () => {
         </>
     )
 }
+
 
 export default edit_Product

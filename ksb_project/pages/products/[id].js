@@ -27,7 +27,7 @@ const Products = () => {
       </div>
 
       <div className='w-full md:w-3/4 lg:w-[60%] mx-auto mt-10 px-4'>
-        <img src={`http://localhost:3000/${product.image}`} alt={product_title} className='h-48 w-full object-contain m-auto' />
+        <img src={`${process.env.URL}/${product.image}`} alt={product_title} className='h-48 w-full object-contain m-auto' />
         <hr />
         <h1 className='mt-3 mb-2 text-lg md:text-xl'>{product_title}</h1>
         <h4 className='text-base md:text-lg'><u>About:</u></h4>
