@@ -24,7 +24,7 @@ const edit = () => {
 
     console.log(formData, "FORM DATA")
     let [error, setError] = useState("");
-    let [success, setSuccess] = useState("false");
+    let [success, setSuccess] = useState(false);
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -81,7 +81,7 @@ const edit = () => {
                 if (data.error) {
                     setError(data.error);
                 } else {
-                    setSuccess("true");
+                    setSuccess(true);
                 }
             })
             .catch(error => {

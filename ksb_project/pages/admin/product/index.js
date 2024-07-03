@@ -6,7 +6,7 @@ import Swal from 'sweetalert2';
 
 export async function getStaticProps() {
     let FRONTEND_URL = process.env.FRONTEND_URL
-    return {props: {FRONTEND_URL}}
+    return { props: { FRONTEND_URL } }
 }
 
 const index = (props) => {
@@ -89,35 +89,35 @@ const index = (props) => {
                         </tr>
                     </thead>
                     <tbody>
-                        {products.map((product, i) => {
-                            return (
-                                <tr class="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700">
-                                    <th
-                                        scope="row"
-                                        class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
-                                    >
-                                        {i + 1}
-                                    </th>
-                                    <td class="px-6 py-4">{product.product_title}</td>
-                                    <td class="px-6 py-4">{product?.category?.category_name}</td>
-                                    <td class="px-6 py-4 ">
-                                        <img src={`${props.FRONTEND_URL}/${product?.image}`} className='h-[100px] w-[100px]' alt={product.image} />
-                                    </td>
-                                    {console.log(process.env.URL)}
-                                    <td class="px-6 py-4 flex items-center">
-                                        <Link
-                                            href={`/admin/product/edit/${product._id}`}
-                                            class="font-medium text-blue-600 dark:text-blue-500 hover:underline mx-5"
+                        {products.length > 0 &&
+                            products.map((product, i) => {
+                                return (
+                                    <tr class="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700">
+                                        <th
+                                            scope="row"
+                                            class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
                                         >
-                                            <button type="warning">Edit</button>
-                                        </Link>
-                                        <button type="delete" onClick={handleDelete(product._id)}>
-                                            Delete
-                                        </button>
-                                    </td>
-                                </tr>
-                            );
-                        })}
+                                            {i + 1}
+                                        </th>
+                                        <td class="px-6 py-4">{product.product_title}</td>
+                                        <td class="px-6 py-4">{product?.category?.category_name}</td>
+                                        <td class="px-6 py-4 ">
+                                            <img src={`${props.FRONTEND_URL}/${product?.image}`} className='h-[100px] w-[100px]' alt={product.image} />
+                                        </td>
+                                        <td class="px-6 py-4 flex items-center">
+                                            <Link
+                                                href={`/admin/product/edit/${product._id}`}
+                                                class="font-medium text-blue-600 dark:text-blue-500 hover:underline mx-5"
+                                            >
+                                                <button type="warning">Edit</button>
+                                            </Link>
+                                            <button type="delete" onClick={handleDelete(product._id)}>
+                                                Delete
+                                            </button>
+                                        </td>
+                                    </tr>
+                                );
+                            })}
                     </tbody>
                 </table>
             </div>
