@@ -11,11 +11,13 @@ const client_page = () => {
 
     useEffect(() => {
 
-        fetch('/api/client', {
+        fetch('http://localhost:3000/api/client', {
             method: "GET",
-        }).then(data => setClients(data))
+        })
+            .then(res => res.json())
+            .then(data => setClients(data))
     }, [])
-
+    console.log(clients, "CLIENTS")
 
 
     const handleDelete = (id) => (e) => {
@@ -32,9 +34,9 @@ const client_page = () => {
         })
             .then(result => {
                 if (result.isConfirmed) {
-                    fetch(`/api/client?id=${id}`, {
+                    fetch(`http://localhost:3000/api/client?id=${id}`, {
                         method: "DELETE"
-                    })(id)
+                    })
                         .then(data => {
                             if (data.error) {
                                 Swal.fire("Error", data.error, 'error')
@@ -92,7 +94,7 @@ const client_page = () => {
                                             {client.image}
                                         </td>
                                         <td className="px-6 py-4">
-                                            <Link href={`/admin/category/edit/${client._id}`} className="font-medium text-blue-600 dark:text-blue-500 hover:underline"><button type='warning'>Edit</button></Link>
+                                            <Link href={`/admin/client/edit/${client._id}`} className="font-medium text-blue-600 dark:text-blue-500 hover:underline"><button type='warning'>Edit</button></Link>
                                             <button type='delete' onClick={handleDelete(client._id)}>Delete</button>
                                         </td>
                                     </tr>

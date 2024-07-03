@@ -5,6 +5,7 @@ import { useState, useEffect } from "react";
 import Sidebar from "./Components/Admin/Sidebar";
 import { useRouter } from "next/router";
 import { isAuthenticated } from "./api/userAPI";
+import Head from "next/head";
 
 export default function App({ Component, pageProps }) {
   const [admin, setadmin] = useState(false);
@@ -48,6 +49,9 @@ export default function App({ Component, pageProps }) {
 
   return (
     <>
+      <Head>
+        <title>Nalina Groups</title>
+      </Head>
       {allowed ? (
         <div className="flex">
           <div className="w-1/4">

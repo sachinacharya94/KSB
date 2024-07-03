@@ -80,7 +80,7 @@ const edit_Product = () => {
 
 
 
-    }, []);
+    }, [id]);
 
     const handleSubmit = async (e) => {
         e.preventDefault();

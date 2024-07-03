@@ -1,4 +1,5 @@
 const Client = require("../../Models/clientModel")
+import { error } from 'console';
 import { IncomingForm } from 'formidable';
 import fs from 'fs';
 import path from 'path';
@@ -128,12 +129,24 @@ export default async function handler(req, res) {
         });
     }
     else if (req.method === 'GET') {
-        let allClients = await Client.find()
-        if (!allClients) {
-            return res.status(400).json({ error: "Something went wrong" })
+        if (req.query.id) {
+            let clientById = await Client.findById(req.query.id)
+            if (!clientById) {
+                return res.send(400).json({ error: "something went wrong" })
+            }
+            res.send(clientById)
+
+
         }
-        res.send(allClients)
-        res.status(200).json(allClients);
+        else {
+
+            let allClients = await Client.find()
+            if (!allClients) {
+                return res.status(400).json({ error: "Something went wrong" })
+            }
+            res.send(allClients)
+            res.status(200).json(allClients);
+        }
     }
     else if (req.method === 'DELETE') {
         let delClients = await Client.findByIdAndDelete(req.query.id)
