@@ -82,7 +82,7 @@ const category_page = () => {
                                             {category.category_name}
                                         </td>
                                         <td className="px-6 py-4">
-                                            <Link href={`/admin/category/edit/${category._id}`} className="font-medium text-blue-600 dark:text-blue-500 hover:underline"><button type='warning'>Edit</button></Link>
+                                            <Link href={`/admin/category/edit/${category._id}`} className="font-medium text-blue-600 dark:text-blue-500 hover:underline mr-2"><button type='warning'>Edit</button></Link>
                                             <button type='delete' onClick={handleDelete(category._id)}>Delete</button>
                                         </td>
                                     </tr>

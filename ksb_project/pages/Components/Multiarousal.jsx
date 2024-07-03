@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 
@@ -21,6 +21,16 @@ const Multiarousal = () => {
             items: 1,
         },
     };
+
+    let [clients, setClients] = useState([])
+    useEffect(() => {
+        fetch(`http://localhost:3000/api/client`, {
+            method: "GET"
+        }).then(res => res.json())
+            .then(data => setClients(data))
+
+
+    }, [])
     return (
         <div>
             <Carousel
@@ -32,28 +42,19 @@ const Multiarousal = () => {
             >
                 {/* <div className="flex "> */}
 
-                <div className=" h-[150px]  ">
-                    <img src="/annapurna.jpg" alt="pizza" className="h-full  " />
-                </div>
-                <div className=" h-[150px] ">
-                    <img src="/chandragire.jpg" alt="pizza" className="h-full  " />
-                </div>
-                <div className=" h-[150px] ">
-                    <img src="/gangalal.jpg" alt="pizza" className="h-full  " />
-                </div>
-                <div className=" h-[150px] ">
-                    <img src="/sipradi.jpg" alt="pizza" className="h-full  " />
-                </div>
-                <div className=" h-[150px] ">
-                    <img src="/gokarna.jpg" alt="pizza" className="h-full  " />
-                </div>
-                <div className=" h-[150px] ">
-                    <img src="/raddition.jpg" alt="pizza" className="h-full  " />
-                </div>
-                <div className=" h-[150px] ">
-                    <img src="/soltae.jpg" alt="pizza" className="h-full  " />
-                </div>
-                {/* </div> */}
+                {
+                    clients.map(item => {
+                        return (
+                            <div className=" h-[150px]  ">
+                                <img src={item.image} alt={item.name} className="h-full  " />
+                            </div>
+                        )
+                    })
+                }
+
+
+
+
             </Carousel>
         </div>
     );
