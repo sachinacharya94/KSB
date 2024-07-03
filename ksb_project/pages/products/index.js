@@ -63,7 +63,7 @@ const Index = (props) => {
           //     ))}
           //   </div>
           // ) : (
-          <div className="w-full md:w-3/4 lg:w-[1200px] m-auto flex flex-col md:flex-row md:gap-4 mb-12 mt-10 justify-center items-center md:flex-wrap px-4">
+          <div className="w-full md:w-3/4 lg:w-[1200px] m-auto flex flex-col md:flex-row md:gap-11 mb-12 mt-10 justify-center items-center md:flex-wrap px-4">
             {products.slice(0, 10).map((product) => (
               <Product key={product._id} product={product} FRONTEND_URL={props.FRONTEND_URL} />
             ))}

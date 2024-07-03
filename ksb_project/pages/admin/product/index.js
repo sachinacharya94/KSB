@@ -107,7 +107,7 @@ const index = (props) => {
                                         <td class="px-6 py-4 flex items-center">
                                             <Link
                                                 href={`/admin/product/edit/${product._id}`}
-                                                class="font-medium text-blue-600 dark:text-blue-500 hover:underline mx-5"
+                                                class="font-medium text-blue-600 dark:text-blue-500 hover:underline mx-2"
                                             >
                                                 <button type="warning">Edit</button>
                                             </Link>
