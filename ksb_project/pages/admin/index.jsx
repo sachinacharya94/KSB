@@ -28,11 +28,9 @@ const index = () => {
                 else {
 
                     authenticate(data)
-                    console.log('test')
 
                     router.push("/admin/dashboard")
 
-                    console.log('test')
 
 
 

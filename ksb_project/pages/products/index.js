@@ -5,18 +5,27 @@ import { getAllCategories } from "../api/categoryAPI.js";
 import { getAllProduct, getProductByCategory } from "../api/productAPI.js";
 import Link from 'next/link';
 
-const Index = () => {
+export async function getStaticProps() {
+  let FRONTEND_URL = process.env.FRONTEND_URL
+  return {props: {FRONTEND_URL}}
+}
+
+const Index = (props) => {
   const [categories, setCategories] = useState([]);
   const [products, setProducts] = useState([]);
-  const [productsBasedOnCategory, setProductsBasedOnCategory] = useState([]);
+  // const [productsBasedOnCategory, setProductsBasedOnCategory] = useState([]);
+  let [reset,setReset] = useState(false)
 
   useEffect(() => {
-    getAllCategories().then((data) => setCategories(data));
+    setReset(false)
+    if(categories.length == 0){
+      getAllCategories().then((data) => setCategories(data));
+    }
     getAllProduct().then((data) => setProducts(data));
-  }, []);
+  }, [reset]);
 
   const handleClick = (id) => {
-    getProductByCategory(id).then((data) => setProductsBasedOnCategory(data));
+    getProductByCategory(id).then((data) => setProducts(data));
   };
 
   return (
@@ -30,6 +39,12 @@ const Index = () => {
           </p>
         </div>
         <div className="w-full md:w-3/4 lg:w-[1200px] m-auto flex flex-col md:flex-row mt-14 justify-center items-center gap-3 px-4">
+        <button
+              className="block py-1 px-3 md:px-5 text-gray-700 bg-white rounded-lg md:bg-transparent md:text-gray-700 dark:text-white md:dark:text-blue-500 hover:md:bg-ksb hover:md:text-white hover:duration-200 md:border-solid md:border-[1px] md:border-gray-700"
+              onClick={() => setReset(true)}
+            >
+              ALL
+            </button>
           {categories.map((category) => (
             <button
               key={category._id}
@@ -40,19 +55,20 @@ const Index = () => {
             </button>
           ))}
         </div>
-        {productsBasedOnCategory.length > 0 ? (
-          <div className="w-full md:w-3/4 lg:w-[1200px] m-auto flex flex-col md:flex-row md:gap-4 mb-12 mt-10 justify-center items-center md:flex-wrap px-4">
-            {productsBasedOnCategory.map((product) => (
-              <Product key={product._id} product={product} />
-            ))}
-          </div>
-        ) : (
+        {products.length > 0 &&
+        // (
+        //   <div className="w-full md:w-3/4 lg:w-[1200px] m-auto flex flex-col md:flex-row md:gap-4 mb-12 mt-10 justify-center items-center md:flex-wrap px-4">
+        //     {productsBasedOnCategory.map((product) => (
+        //       <Product key={product._id} product={product} FRONTEND_URL={props.FRONTEND_URL} />
+        //     ))}
+        //   </div>
+        // ) : (
           <div className="w-full md:w-3/4 lg:w-[1200px] m-auto flex flex-col md:flex-row md:gap-4 mb-12 mt-10 justify-center items-center md:flex-wrap px-4">
             {products.slice(0, 10).map((product) => (
-              <Product key={product._id} product={product} />
+              <Product key={product._id} product={product} FRONTEND_URL={props.FRONTEND_URL}  />
             ))}
           </div>
-        )}
+        }
       </div>
     </>
   );

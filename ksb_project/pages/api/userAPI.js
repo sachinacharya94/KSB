@@ -44,5 +44,7 @@ export const authenticate = (data) => {
 }
 
 export const isAuthenticated = async () => {
-  return localStorage.getItem("jwt") ? await JSON.parse(localStorage.getItem('jwt')) : false
+  // if(typeof windows !== "undefined"){
+    return localStorage.getItem("jwt") ? await JSON.parse(localStorage.getItem('jwt')) : false
+  // }
 }

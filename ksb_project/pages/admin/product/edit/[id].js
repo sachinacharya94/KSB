@@ -4,8 +4,14 @@ import Link from 'next/link';
 import { useParams } from 'next/navigation';
 import React, { useEffect, useState } from 'react'
 
+// export async function getStaticProps() {
+//     let FRONTEND_URL = process.env.FRONTEND_URL
+//     return {props: {FRONTEND_URL}}
+// }
+
 const edit_Product = () => {
 
+    // let FRONTEND_URL = process.env.FRONTEND_URL
     let [categorys, setCategorys] = useState([]);
     // let [productById, setProductById] = useState({});
     const params = useParams()

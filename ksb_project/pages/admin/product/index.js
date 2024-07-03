@@ -4,8 +4,13 @@ import { useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react'
 import Swal from 'sweetalert2';
 
+export async function getStaticProps() {
+    let FRONTEND_URL = process.env.FRONTEND_URL
+    return {props: {FRONTEND_URL}}
+}
 
-const index = () => {
+const index = (props) => {
+    // console.log(props)
     let [products, setProducts] = useState([]);
     let router = useRouter()
 
@@ -96,7 +101,7 @@ const index = () => {
                                     <td class="px-6 py-4">{product.product_title}</td>
                                     <td class="px-6 py-4">{product?.category?.category_name}</td>
                                     <td class="px-6 py-4 ">
-                                        <img src={`http://localhost:3000/${product?.image}`} className='h-[100px] w-[100px]' alt={product.image} />
+                                        <img src={`${props.FRONTEND_URL}/${product?.image}`} className='h-[100px] w-[100px]' alt={product.image} />
                                     </td>
                                     {console.log(process.env.URL)}
                                     <td class="px-6 py-4 flex items-center">

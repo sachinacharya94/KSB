@@ -1,20 +1,46 @@
 import React, { useEffect, useState } from 'react';
-import { getProductById } from '../api/productAPI';
+import { getAllProduct, getProductById } from '../api/productAPI';
 import { useParams } from 'next/navigation';
 
+
+// export async function getStaticPaths() {
+//   const FRONTEND_URL = process.env.FRONTEND_URL
+//   const products = await getAllProduct()
+//   console.log(products)
+//   const paths = await products?.map(product=>{
+//     return {params: {...product, image: `${FRONTEND_URL}/${product.image}` }}
+//    })
+//   return {
+//      paths,
+//      fallback: false
+//   }
+// }
+// export async function getStaticProps({ params }) {
+//   const product = await getProductById(params.id)
+//      return {
+//      props: {
+//         product
+//      }
+//   }
+// }
+
+
+// const Products = ({product}) => {
 const Products = () => {
   let params = useParams();
   const id = params?.id;
   const [product, setProduct] = useState({});
-  let { product_title, about, application, head, temperature, motor_rating, capacity } = product;
+  let { product_title, about, application, head, temperature, motor_rating, capacity, image } = product;
+  let server = process.env.FRONT_END
 
   useEffect(() => {
+
     getProductById(id)
       .then(data => setProduct(data))
       .catch(err => console.log(err));
   }, [id]);
 
-  console.log(product);
+  console.log(server);
 
   return (
     <div>
@@ -27,7 +53,7 @@ const Products = () => {
       </div>
 
       <div className='w-full md:w-3/4 lg:w-[60%] mx-auto mt-10 px-4'>
-        <img src={`${process.env.URL}/${product.image}`} alt={product_title} className='h-48 w-full object-contain m-auto' />
+        <img src={`http://localhost:3000/${image}`} alt={product_title} className='h-48 w-full object-contain m-auto' />
         <hr />
         <h1 className='mt-3 mb-2 text-lg md:text-xl'>{product_title}</h1>
         <h4 className='text-base md:text-lg'><u>About:</u></h4>
