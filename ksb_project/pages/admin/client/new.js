@@ -60,7 +60,7 @@ const add = () => {
                 if (data.error) {
                     setError(data.error);
                 } else {
-                    setSuccess("Product Added Successfully");
+                    setSuccess("Client Added Successfully");
                 }
             })
             .catch(error => {
