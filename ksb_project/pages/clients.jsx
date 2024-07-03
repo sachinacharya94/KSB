@@ -1,8 +1,19 @@
-import React from 'react';
-import { Clients } from "../raw.js";
+import React, { useEffect, useState } from 'react';
+// import { Clients } from "../raw.js";
 import ClientsCard from './Components/ClientsCard.jsx';
 
 const clients = () => {
+
+    let [clients, setClients]  = useState([])
+    useEffect(()=>{
+        fetch(`http://localhost:3000/api/client`,{
+            method: "GET"
+        }).then(res=>res.json())
+        .then(data=> setClients(data))
+
+        
+    },[])
+    console.log(clients,"client")
     return (
         <div>
             <div className='relative'>
@@ -12,9 +23,9 @@ const clients = () => {
                     Home/<span className='text-orange-500'>Clients</span>
                 </p>
             </div>
-            <div className='w-full md:w-3/4 lg:w-[1200px] m-auto flex flex-col md:flex-row gap-4 md:gap-8 flex-wrap mt-7 px-4'>
+            <div className='w-full md:w-3/4 lg:w-[1200px] m-auto flex flex-col md:flex-row gap-4 md:gap-20 flex-wrap mt-7 px-4'>
                 {
-                    Clients.map((item) => {
+                    clients.map((item) => {
                         return (
                             <div key={item.id} className='w-full sm:w-1/2 md:w-1/3 lg:w-1/4 p-2'>
                                 <ClientsCard item={item} />
