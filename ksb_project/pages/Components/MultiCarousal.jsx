@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 
-const Multiarousal = () => {
+const MultiCarousal = () => {
     const responsive = {
         superLargeDesktop: {
             breakpoint: { max: 4000, min: 3000 },
@@ -24,19 +24,17 @@ const Multiarousal = () => {
 
     let [clients, setClients] = useState([])
     useEffect(() => {
-        fetch(`http://localhost:3000/api/client`, {
+        fetch(`/api/client`, {
             method: "GET"
         }).then(res => res.json())
             .then(data => setClients(data))
-
-
     }, [])
     return (
         <div>
             <Carousel
                 infinite={true}
                 autoPlay={true}
-                autoPlaySpeed={1000}
+                autoPlaySpeed={3000}
                 responsive={responsive}
                 swipeable={true}
             >
@@ -45,7 +43,7 @@ const Multiarousal = () => {
                 {
                     clients.map(item => {
                         return (
-                            <div className=" h-[150px]  ">
+                            <div className="h-[150px]">
                                 <img src={item.image} alt={item.name} className="h-full  " />
                             </div>
                         )
@@ -60,4 +58,4 @@ const Multiarousal = () => {
     );
 };
 
-export default Multiarousal;
+export default MultiCarousal;
