@@ -6,9 +6,7 @@ const clients = () => {
 
     let [clients, setClients]  = useState([])
     useEffect(()=>{
-        fetch(`http://localhost:3000/api/client`,{
-            method: "GET"
-        }).then(res=>res.json())
+        fetch(`/api/client`).then(res=>res.json())
         .then(data=> setClients(data))
 
         
@@ -28,6 +26,7 @@ const clients = () => {
                     clients.map((item) => {
                         return (
                             <div key={item.id} className='w-full sm:w-1/2 md:w-1/3 lg:w-1/4 p-2'>
+                                
                                 <ClientsCard item={item} />
                             </div>
                         );

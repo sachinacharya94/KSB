@@ -3,7 +3,7 @@ import { getAllCategories } from "./api/categoryAPI";
 import { getAllProduct, getProductByCategory } from "./api/productAPI";
 import Product from "./Components/Product";
 import Link from "next/link";
-import Multiarousal from "./Components/Multiarousal";
+import MultiCarousal from "./Components/MultiCarousal";
 import Sliders from "./Components/Carousel";
 
 export default function Home() {
@@ -101,7 +101,7 @@ export default function Home() {
           </p>
         </div>
 
-        <Multiarousal />
+        <MultiCarousal />
       </div>
       <div className="h-36 w-full bg-ksb flex flex-col md:flex-row justify-center items-center gap-10 md:gap-32 p-4">
         <p className="text-white text-xl md:text-4xl">
