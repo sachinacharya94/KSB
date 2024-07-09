@@ -3,6 +3,7 @@ import { getProductById, updateProduct } from '@/pages/api/productAPI';
 import Link from 'next/link';
 import { useParams } from 'next/navigation';
 import React, { useEffect, useState } from 'react'
+import { Editor } from '@tinymce/tinymce-react';
 
 // export async function getStaticProps() {
 //     let FRONTEND_URL = process.env.FRONTEND_URL
@@ -139,6 +140,10 @@ const edit_Product = () => {
                 console.error('Form submission error:', error);
             })
     };
+    const handleEditorChange = (content, editor) => {
+        const { id } = editor;
+        setFormData({ ...formData, [id]: content })
+    }
 
 
     const showError = () => {
@@ -179,7 +184,7 @@ const edit_Product = () => {
                         <form onSubmit={handleSubmit}>
                             {showError}
                             {showSuccess}
-                            <div className="grid gap-4 mb-4 sm:grid-cols-2">
+                            <div className="">
                                 <div>
                                     <label
                                         for="name"
@@ -199,23 +204,34 @@ const edit_Product = () => {
                                     />
                                 </div>
                                 <div>
-                                    <label
-                                        for="name"
-                                        className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                                    >
-                                        About*
-                                    </label>
-                                    <input
-                                        type="text"
+                                    <label htmlFor="about" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">About:</label>
+
+                                    <Editor
+
+                                        apiKey="19m7bc67maqca1olojnw5zzrphaac5oh1r0hgrkq2jfv5y5v"
+                                        // onInit={(_evt, editor) => editorRef.current = editor}
+
+                                        init={{
+                                            plugins: 'anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount checklist mediaembed casechange export formatpainter pageembed linkchecker a11ychecker tinymcespellchecker permanentpen powerpaste advtable advcode editimage advtemplate ai mentions tinycomments tableofcontents footnotes mergetags autocorrect typography inlinecss markdown',
+                                            toolbar: 'undo redo | bold italic  |aligncenter | alignleft |alignright| fontsize',
+                                            tinycomments_mode: 'embedded',
+                                            tinycomments_author: 'Author name',
+                                            height: 800,
+                                            width: 600,
+                                            menubar: false,
+                                            directionality: 'ltr',
+                                            content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:16px }',
+
+                                            ai_request: (request, respondWith) => respondWith.string(() => Promise.reject("See docs to implement AI Assistant")),
+                                        }}
+                                        initialValue={formData.about}
+                                        id="about"
                                         name="about"
                                         value={formData.about}
-                                        id="name"
-                                        className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                                        placeholder="Type product name"
-                                        required=""
-                                        onChange={handleChange}
+                                        onEditorChange={handleEditorChange}
                                     />
                                 </div>
+
                                 <div>
                                     <label
                                         for="name"
@@ -333,7 +349,7 @@ const edit_Product = () => {
                             <button
                                 // onClick={handleSubmit}
                                 type="add"
-                                className="text-white inline-flex items-center bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800  "
+                                className="text-white inline-flex items-center bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800 mt-10"
                             >
                                 <svg
                                     className="mr-1 -ml-1 w-6 h-6"

@@ -4,7 +4,12 @@ import { useRouter } from 'next/navigation'
 import React, { useEffect, useState } from 'react'
 import Swal from 'sweetalert2'
 
-const client_page = () => {
+export async function getStaticProps() {
+    let FRONTEND_URL = process.env.FRONTEND_URL
+    return { props: { FRONTEND_URL } }
+}
+
+const client_page = (props) => {
     let [clients, setClients] = useState([])
     let router = useRouter()
 
@@ -91,7 +96,7 @@ const client_page = () => {
                                             {client.name}
                                         </td>
                                         <td className="px-6 py-4">
-                                            {client.image}
+                                            {`${props.FRONTEND_URL}/${client.image}`}
                                         </td>
                                         <td className="px-6 py-4">
                                             <Link href={`/admin/client/edit/${client._id}`} className="font-medium text-blue-600 dark:text-blue-500 hover:underline mr-2"><button type='warning'>Edit</button></Link>
