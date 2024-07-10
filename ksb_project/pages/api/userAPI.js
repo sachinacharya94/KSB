@@ -45,6 +45,19 @@ export const authenticate = (data) => {
 
 export const isAuthenticated = async () => {
   // if(typeof windows !== "undefined"){
-    return localStorage.getItem("jwt") ? await JSON.parse(localStorage.getItem('jwt')) : false
+  return localStorage.getItem("jwt") ? await JSON.parse(localStorage.getItem('jwt')) : false
   // }
+}
+
+export const verifyUser = (id) => {
+  return fetch(`/api/user?id=${id}`, {
+    method: "PATCH",
+    headers: {
+      accept: "Application/json",
+      "Content-Type": "application/json",
+    },
+
+  })
+    .then(res => res.json())
+    .catch(err => console.log(err))
 }

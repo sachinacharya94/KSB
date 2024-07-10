@@ -21,16 +21,20 @@ const index = () => {
         e.preventDefault()
         login(user)
             .then(data => {
-
+                console.log(data, "login")
                 if (data && data.error) {
-                    console.log(data, "login")
+
                     setError(data.error)
                 }
                 else {
 
-                    authenticate(data)
+                    {
+                        // data.isVerified &&
 
-                    router.push("/admin/dashboard")
+                        authenticate(data)
+
+                        router.push("/admin/dashboard")
+                    }
 
 
 

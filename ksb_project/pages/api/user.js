@@ -62,6 +62,10 @@ export default async function handler(req, res) {
       if (!validPassword) {
         return res.status(400).json({ error: "Invalid Password or Password does not match" })
       }
+      if (!user.isVerified) {
+        return res.status(400).json({ error: "User not verified. Contact Administrator!" })
+      }
+
 
       const { _id } = user
 
@@ -85,7 +89,7 @@ export default async function handler(req, res) {
       res.send({ token, user: { _id, email } })
     } else {
       return res.status(400).json({ error: "Invalid request parameters." })
-    } 
+    }
   } else if (req.method === "GET") {
     let users = await User.find()
 
@@ -94,7 +98,19 @@ export default async function handler(req, res) {
     }
 
     res.send(users);
-  } else {
+  } else if (req.method === "PATCH") {
+    let userUpdate = await User.findByIdAndUpdate(req.query.id, {
+      isVerified: true
+    }, { new: true })
+
+    if (!userUpdate) {
+      return res.status(400).json({ error: "Something went wrong, couldn't update!" })
+    }
+    res.send(userUpdate)
+
+  }
+
+  else {
     res.status(405).json({ error: "Method not allowed" })
   }
   // catch (error) {
