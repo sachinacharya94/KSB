@@ -29,7 +29,7 @@ export default function Home() {
         <p className="text-lg md:text-xl text-gray-500">
           A comprehensive range of KSB pumps and valves
         </p>
-        <div className="flex flex-col md:flex-row mt-14 justify-center items-center gap-3">
+        <div className="flex flex-col md:flex-row mt-14 justify-center items-center gap-3 flex-wrap">
           {categories.map((category) => (
             <button
               key={category._id}
